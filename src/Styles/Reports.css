@@ -1,0 +1,14 @@
+.contains {
+    display: flex;
+    flex-direction: column;
+    /* background-color: black; */
+    
+}
+
+
+.grid {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
