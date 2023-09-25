@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import '../../Styles/Admin.css';
-import axios from 'axios'; 
+import axios from 'axios';
+import { Navigate, useNavigate } from 'react-router';
 
 export default function Admin() {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [formData, setFormData] = useState({
     page1: {
@@ -22,7 +24,7 @@ export default function Admin() {
       mitigations: '',
     },
   });
-  const [isFormVisible, setIsFormVisible] = useState(false);
+  const [isFormVisible, setIsFormVisible] = useState(true);
 
   const showForm = () => {
     setIsFormVisible(true);
@@ -30,7 +32,9 @@ export default function Admin() {
 
   const hideForm = () => {
     setIsFormVisible(false);
-    setCurrentPage(1); // Reset to the first page when closing the form
+    setCurrentPage(1); 
+    navigate('/projects')
+    // Reset to the first page when closing the form
   };
 
   const nextPage = () => {
@@ -57,13 +61,13 @@ export default function Admin() {
     console.log(formData);
     // setIsFormVisible(false);
     // setCurrentPage(1);
-    
+
     axios.post('http://localhost:3001/reports/create', formData)
       .then((response) => {
-        // Handle a successful response (e.g., show a success message)
+       
         console.log('Form submitted successfully');
         console.log(response);
-        // Optionally, reset the form or close the modal
+       
         setIsFormVisible(false);
         setCurrentPage(1);
       })
@@ -71,21 +75,28 @@ export default function Admin() {
         // Handle errors (e.g., display an error message)
         console.error('Error submitting form:', error);
       });
+      navigate('/projects')
   };
 
   return (
     <div className="App">
-      <h1>Multi-Page Form</h1>
-      <button onClick={showForm}>Show Form</button>
+      {/* <button onClick={showForm}>create Report</button> */}
 
       {isFormVisible && (
         <div className="form-container">
           <div className="form-modal">
-            <button className="close-button" onClick={hideForm}>
-              &times;
-            </button>
-            <h2>Page {currentPage}</h2>
+
+
+            
             <form onSubmit={handleSubmit}>
+            <h2>Page {currentPage}</h2>
+
+            
+              <button
+                className="btn btn-danger close-button"
+                onClick={hideForm}>
+                &times;
+              </button>
               {currentPage === 1 && (
                 <div>
                   {/* Page 1 fields */}

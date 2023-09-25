@@ -4,6 +4,7 @@ import moment from 'moment'
 
 export default function Header(props) {
     const Data = props.Data
+    console.log(Data)
     console.log("headerdata",Data.startDate)
     console.log(typeof(Data.startDate))
     const startDate = new Date(Data.startDate)
